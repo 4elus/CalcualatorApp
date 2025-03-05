@@ -12,8 +12,11 @@ namespace CalcualatorApp
 {
     public partial class Form1 : Form
     {
-        int count = 0;
+        int num1 = 0;
+        int num2 = 0;
+        string operation = "";
         string value = "";
+        int res = 0;
         public Form1()
         {
             InitializeComponent();
@@ -29,7 +32,7 @@ namespace CalcualatorApp
                 e.Handled = true;
             }
 
-            if  (!char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            if  (!char.IsDigit(e.KeyChar) && (e.KeyChar != '.') && (e.KeyChar != '-'))
             {
                 e.Handled = true;
             }
@@ -183,12 +186,61 @@ namespace CalcualatorApp
         {
             if (textBoxеTablo.Text.Length > 0)
             {
-                textBoxеTablo.Text = textBoxеTablo.Text.Replace(textBoxеTablo.Text.Last().ToString(), ""); // Replace заменят старый символ, на новый указанный 
+                string val = textBoxеTablo.Text;
+
+
+                textBoxеTablo.Text = "";
+                for (int i = 0; i < val.Length-1; i++)
+                {
+                   
+                    textBoxеTablo.Text += val[i].ToString();
+                }
+
+               // textBoxеTablo.Text = textBoxеTablo.Text.Replace(textBoxеTablo.Text.Last().ToString(), ""); // Replace заменят старый символ, на новый указанный 
                 if (textBoxеTablo.Text.Length == 0)
                     textBoxеTablo.Text = "0";
             }
             else
                 textBoxеTablo.Text = "0";
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            operation = "+";
+            num1 = Convert.ToInt32(textBoxеTablo.Text);
+            textBoxеTablo.Text = "";
+
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (num2 == 0)
+            {
+                num2 = Convert.ToInt32(textBoxеTablo.Text);
+            }
+          
+            if (operation == "+")
+            {
+                res += num1 + num2;
+                num1 = 0;
+            }
+
+            if (operation == "-")
+            {
+                res += num1 - num2;
+                num1 = 0;
+            }
+
+            textBoxеTablo.Text = res.ToString();
+          
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            operation = "-";
+            num1 = Convert.ToInt32(textBoxеTablo.Text);
+            textBoxеTablo.Text = "";
         }
     }
 }
