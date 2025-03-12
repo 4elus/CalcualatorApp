@@ -12,11 +12,13 @@ namespace CalcualatorApp
 {
     public partial class Form1 : Form
     {
-        int num1 = 0;
-        int num2 = 0;
+        double num1 = 0;
+        double num2 = 0;
         string operation = "";
         string value = "";
-        int res = 0;
+        double res = 0;
+        bool click_math_operation = false;
+
         public Form1()
         {
             InitializeComponent();
@@ -25,16 +27,20 @@ namespace CalcualatorApp
         private void textBoxеTablo_KeyPress(object sender, KeyPressEventArgs e)
         {
 
-           
 
             if (value.Contains('.'))
             {
                 e.Handled = true;
             }
 
-            if  (!char.IsDigit(e.KeyChar) && (e.KeyChar != '.') && (e.KeyChar != '-'))
+            if (!char.IsDigit(e.KeyChar) && (e.KeyChar != '.') && (e.KeyChar != '-'))
             {
                 e.Handled = true;
+            }
+
+            if (textBoxеTablo.Text.Length > 0)
+            {
+                e.Handled = false;
             }
             value += e.KeyChar;
 
@@ -63,7 +69,7 @@ namespace CalcualatorApp
             {
                 textBoxеTablo.Text += "1";
             }
-           
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -120,6 +126,7 @@ namespace CalcualatorApp
 
         private void button1_Click(object sender, EventArgs e)
         {
+
             if (textBoxеTablo.Text.Length == 1 && textBoxеTablo.Text == "0")
             {
                 textBoxеTablo.Text = "4";
@@ -172,14 +179,14 @@ namespace CalcualatorApp
 
         private void button20_Click(object sender, EventArgs e)
         {
-            if (!textBoxеTablo.Text.Contains(".")) // ! - не. Contains = проверяет есть ли в текстовом поле символ "."
+            if (!textBoxеTablo.Text.Contains(",")) // ! - не. Contains = проверяет есть ли в текстовом поле символ "."
             {
-                textBoxеTablo.Text += ".";
+                textBoxеTablo.Text += ",";
             }
 
-           
 
- 
+
+
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -190,13 +197,13 @@ namespace CalcualatorApp
 
 
                 textBoxеTablo.Text = "";
-                for (int i = 0; i < val.Length-1; i++)
+                for (int i = 0; i < val.Length - 1; i++)
                 {
-                   
+
                     textBoxеTablo.Text += val[i].ToString();
                 }
 
-               // textBoxеTablo.Text = textBoxеTablo.Text.Replace(textBoxеTablo.Text.Last().ToString(), ""); // Replace заменят старый символ, на новый указанный 
+                // textBoxеTablo.Text = textBoxеTablo.Text.Replace(textBoxеTablo.Text.Last().ToString(), ""); // Replace заменят старый символ, на новый указанный 
                 if (textBoxеTablo.Text.Length == 0)
                     textBoxеTablo.Text = "0";
             }
@@ -207,7 +214,8 @@ namespace CalcualatorApp
         private void button8_Click(object sender, EventArgs e)
         {
             operation = "+";
-            num1 = Convert.ToInt32(textBoxеTablo.Text);
+            click_math_operation = true;
+            num1 = Convert.ToDouble(textBoxеTablo.Text);
             textBoxеTablo.Text = "";
 
 
@@ -215,32 +223,105 @@ namespace CalcualatorApp
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (num2 == 0)
+
+
+            if (click_math_operation == false)
             {
-                num2 = Convert.ToInt32(textBoxеTablo.Text);
+                num1 = Convert.ToDouble(textBoxеTablo.Text);
             }
-          
-            if (operation == "+")
+            else
             {
-                res += num1 + num2;
-                num1 = 0;
+                num2 = Convert.ToDouble(textBoxеTablo.Text);
             }
 
-            if (operation == "-")
+
+            switch (operation)
             {
-                res += num1 - num2;
-                num1 = 0;
+                case "+":
+                    res = num1 + num2;
+                    break;
+                case "-":
+                    res = num1 - num2;
+                    break;
+                case "*":
+                    res = num1 * num2;
+                    break;
+                case "/":
+                    if (num2 != 0)
+                        res = num1 / num2;
+                    else
+                        MessageBox.Show("Деление на ноль невозможно!");
+                    break;
             }
 
             textBoxеTablo.Text = res.ToString();
-          
+            click_math_operation = false;
+
+            //num1 = res;
+            //num2 = 0;
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
             operation = "-";
-            num1 = Convert.ToInt32(textBoxеTablo.Text);
+            click_math_operation = true;
+            num1 = Convert.ToDouble(textBoxеTablo.Text);
             textBoxеTablo.Text = "";
         }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            operation = "*";
+            click_math_operation = true;
+            num1 = Convert.ToDouble(textBoxеTablo.Text);
+            textBoxеTablo.Text = "";
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            operation = "/";
+            click_math_operation = true;
+            num1 = Convert.ToDouble(textBoxеTablo.Text);
+            textBoxеTablo.Text = "";
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            textBoxеTablo.Text = "";
+            num1 = 0;
+            num2 = 0;
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            if (textBoxеTablo.Text.Length > 0)
+            {
+                string val = textBoxеTablo.Text;
+                int i = 0;
+
+                if (val.Contains('-'))
+                {
+                    val = "";
+                    val += textBoxеTablo.Text;
+                    i = 1;
+
+                }
+                else
+                {
+                    val = "-";
+                    val += textBoxеTablo.Text;
+                    i = 0;
+                }
+
+                textBoxеTablo.Text = "";
+                for (; i < val.Length; i++)
+                {
+
+                    textBoxеTablo.Text += val[i].ToString();
+                }
+            }
+        }
+
+
     }
 }
