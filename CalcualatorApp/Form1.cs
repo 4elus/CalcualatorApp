@@ -252,13 +252,13 @@ namespace CalcualatorApp
                     else
                         MessageBox.Show("Деление на ноль невозможно!");
                     break;
+                case "%":
+                    res = (num1 * (num2 / 100));
+                    break;
             }
 
             textBoxеTablo.Text = res.ToString();
             click_math_operation = false;
-
-            //num1 = res;
-            //num2 = 0;
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -322,6 +322,33 @@ namespace CalcualatorApp
             }
         }
 
+        private void button11_Click_1(object sender, EventArgs e)
+        {
+            operation = "*";
+            click_math_operation = true;
+            num1 = Convert.ToDouble(textBoxеTablo.Text);
+            textBoxеTablo.Text = "";
+        }
 
+        private void button10_Click_1(object sender, EventArgs e)
+        {
+            operation = "/";
+            click_math_operation = true;
+            num1 = Convert.ToDouble(textBoxеTablo.Text);
+            textBoxеTablo.Text = "";
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            operation = "%";
+            click_math_operation= true;
+            num1 = Convert.ToDouble(textBoxеTablo.Text);
+            textBoxеTablo.Text = "";
+        }
+
+        private void button12_Click_1(object sender, EventArgs e)
+        {
+            textBoxеTablo.Text = "";
+        }
     }
 }
